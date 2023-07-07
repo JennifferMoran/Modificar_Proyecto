@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+
 class Paciente(models.Model):
     id_paciente = models.IntegerField(null=True)
     Pac_nomb= models.CharField(max_length=20, null=True)
@@ -10,12 +11,19 @@ class Paciente(models.Model):
 
     def __str__(self):
         return f'{self.id_paciente} {self.Pac_nomb} {self.Pac_Apellido}'
+
+class Especialidad(models.Model):
+    nom_especialidad = models.CharField(max_length=20, null=True)
+    activo = models.BooleanField(default=True)
+    def __str__(self):
+        return f'{self.nom_especialidad}'
 class Doctor(models.Model):
     id_doctor = models.IntegerField(null=True)
     Doc_nomb= models.CharField(max_length=20, null=True)
     Doc_Apellido = models.CharField(max_length=20, null=True)
-    especialidad = models.CharField(max_length=20, null=True)
+  #  especialidad = models.CharField(max_length=20, null=True)
     Doc_direccion = models.CharField(max_length=20, null=True)
+    especialidad = models.ForeignKey(Especialidad, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f'{self.id_doctor} {self.Doc_nomb} {self.Doc_Apellido}'
